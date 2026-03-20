@@ -97,6 +97,13 @@ class Game {
     checkCollisions() {
         if (this.isCrashed) return;
 
+        // 1. Off-track boundary check (Road width is 30, so +/- 15)
+        if (Math.abs(this.car.mesh.position.x) > 15) {
+            this.onCrash("OFF TRACK!");
+            return;
+        }
+
+        // 2. Obstacle collision check
         const carBox = new THREE.Box3().setFromObject(this.car.mesh);
         // Shrink car box slightly for fairer collisions
         carBox.min.add(new THREE.Vector3(0.5, 0, 0.5));
@@ -105,16 +112,21 @@ class Game {
         for (const obstacle of this.environment.obstacles) {
             const obstacleBox = new THREE.Box3().setFromObject(obstacle);
             if (carBox.intersectsBox(obstacleBox)) {
-                this.onCrash();
+                this.onCrash("CRASHED!");
                 break;
             }
         }
     }
 
-    onCrash() {
+    onCrash(message = "CRASHED!") {
         if (this.isCrashed) return;
         this.isCrashed = true;
         this.car.speed = 0;
+        
+        // Face opposite direction for dramatic effect
+        this.car.mesh.rotation.y += Math.PI;
+
+        this.crashOverlay.querySelector('h1').innerText = message;
         this.crashOverlay.style.display = 'flex';
         
         setTimeout(() => {
