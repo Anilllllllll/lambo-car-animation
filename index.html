@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lambo 3D Experience | Industry Level</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="game-container">
+        <div id="canvas-container"></div>
+        
+        <div id="hud">
+            <div class="speedometer">
+                <span id="speed-value">0</span>
+                <span class="unit">KM/H</span>
+            </div>
+            <div class="controls-hint">
+                <p>WASD / ARROWS TO DRIVE</p>
+                <p>SPACE TO BRAKE</p>
+            </div>
+        </div>
+
+        <div id="loading-screen">
+            <div class="loader"></div>
+            <h1>IGNITING ENGINE...</h1>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
