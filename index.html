@@ -22,6 +22,10 @@
         <div id="canvas-container"></div>
         
         <div id="hud">
+            <div class="distance-box">
+                <span id="distance-value">0</span>
+                <span class="unit">Meters</span>
+            </div>
             <div class="speedometer">
                 <span id="speed-value">0</span>
                 <span class="unit">KM/H</span>
@@ -30,6 +34,11 @@
                 <p>WASD / ARROWS TO DRIVE</p>
                 <p>SPACE TO BRAKE</p>
             </div>
+        </div>
+
+        <div id="crash-overlay">
+            <h1>CRASHED!</h1>
+            <p>Restarting Engine...</p>
         </div>
 
         <div id="loading-screen">

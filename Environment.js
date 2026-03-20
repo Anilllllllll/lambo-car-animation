@@ -5,7 +5,8 @@ export class Environment {
     constructor(scene) {
         this.scene = scene;
         this.roadTileSize = 100;
-        this.roadTiles = [];
+        this.tiles = [];
+        this.obstacles = [];
         this.numTiles = 12;
         this.initLights();
     }
@@ -78,16 +79,52 @@ export class Environment {
             }
 
             roadGroup.add(tile);
-            this.roadTiles.push(tile);
+            this.tiles.push(tile); // Renamed from roadTiles
+
+            // Spawn obstacles on new tiles (except the very first few)
+            if (tile.position.z > 50) {
+                this.spawnObstacles(tile.position.z);
+            }
+        }
+    }
+
+    spawnObstacles(z) {
+        // 40% chance of spawning an obstacle on a tile
+        if (Math.random() > 0.6) {
+            const obstacleGeo = new THREE.ConeGeometry(0.5, 1, 8);
+            const obstacleMat = new THREE.MeshStandardMaterial({ color: 0xffa500 }); // Orange Cones
+            const obstacle = new THREE.Mesh(obstacleGeo, obstacleMat);
+            
+            // Random lane (-6, 0, or 6)
+            const lanes = [-6, 0, 6];
+            const lane = lanes[Math.floor(Math.random() * lanes.length)];
+            
+            obstacle.position.set(lane, 0.5, z + (Math.random() - 0.5) * 40);
+            obstacle.castShadow = true;
+            this.scene.add(obstacle);
+            this.obstacles.push(obstacle);
         }
     }
 
     update(carZ) {
-        this.roadTiles.forEach(tile => {
+        // Clean up old obstacles
+        this.obstacles = this.obstacles.filter(obj => {
+            if (obj.position.z < carZ - 50) {
+                this.scene.remove(obj);
+                return false;
+            }
+            return true;
+        });
+
+        // Existing tile update logic...
+        this.tiles.forEach(tile => { // Renamed from roadTiles
             if (carZ - tile.position.z > this.roadTileSize * 2) {
                 tile.position.z += this.numTiles * this.roadTileSize;
+                // Spawn new obstacles when a tile loops around
+                this.spawnObstacles(tile.position.z);
             } else if (tile.position.z - carZ > (this.numTiles - 2) * this.roadTileSize) {
                 tile.position.z -= this.numTiles * this.roadTileSize;
+                // No need to spawn obstacles for backward movement, as they would be behind the car
             }
         });
     }

@@ -14,10 +14,16 @@ class Game {
         this.container = document.getElementById('canvas-container');
         this.loadingScreen = document.getElementById('loading-screen');
         this.speedElement = document.getElementById('speed-value');
+        this.distanceElement = document.getElementById('distance-value');
+        this.crashOverlay = document.getElementById('crash-overlay');
         
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+        this.clock = new THREE.Clock();
+        
+        this.distance = 0;
+        this.isCrashed = false;
         
         this.init();
     }
@@ -31,12 +37,9 @@ class Game {
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.container.appendChild(this.renderer.domElement);
 
-        this.camera.position.set(0, 5, -10);
-        this.camera.lookAt(0, 0, 5);
-
-        this.controls = new Controls();
         this.environment = new Environment(this.scene);
         this.car = new Car(this.scene);
+        this.controls = new Controls();
 
         try {
             await Promise.all([
@@ -78,6 +81,7 @@ class Game {
     updateHUD() {
         const speed = Math.round(Math.abs(this.car.speed) * 3.6);
         this.speedElement.innerText = speed;
+        this.distanceElement.innerText = Math.floor(this.distance);
     }
 
     updateCamera() {
@@ -90,11 +94,51 @@ class Game {
         this.camera.lookAt(lookTarget);
     }
 
+    checkCollisions() {
+        if (this.isCrashed) return;
+
+        const carBox = new THREE.Box3().setFromObject(this.car.mesh);
+        // Shrink car box slightly for fairer collisions
+        carBox.min.add(new THREE.Vector3(0.5, 0, 0.5));
+        carBox.max.sub(new THREE.Vector3(0.5, 0, 0.5));
+
+        for (const obstacle of this.environment.obstacles) {
+            const obstacleBox = new THREE.Box3().setFromObject(obstacle);
+            if (carBox.intersectsBox(obstacleBox)) {
+                this.onCrash();
+                break;
+            }
+        }
+    }
+
+    onCrash() {
+        if (this.isCrashed) return;
+        this.isCrashed = true;
+        this.car.speed = 0;
+        this.crashOverlay.style.display = 'flex';
+        
+        setTimeout(() => {
+            this.isCrashed = false;
+            this.crashOverlay.style.display = 'none';
+            // Move car forward slightly to avoid immediate re-collision
+            this.car.mesh.position.z += 10;
+        }, 2000);
+    }
+
     animate() {
         requestAnimationFrame(() => this.animate());
-        const delta = 0.016;
-        this.car.update(delta, this.controls);
-        this.environment.update(this.car.mesh.position.z);
+        const delta = this.clock.getDelta();
+        
+        if (!this.isCrashed) {
+            this.car.update(delta, this.controls);
+            this.environment.update(this.car.mesh.position.z);
+            
+            if (this.car.speed > 0) {
+                this.distance += this.car.speed * delta;
+            }
+            this.checkCollisions();
+        }
+
         this.updateCamera();
         this.updateHUD();
         this.composer.render();
