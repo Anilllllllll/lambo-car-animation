@@ -122,6 +122,89 @@ body {
     to { transform: rotate(360deg); }
 }
 
+/* Hide cursor when game is active */
 body.in-game {
     cursor: none;
+}
+
+/* Mobile Controls */
+#mobile-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: none;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    pointer-events: auto;
+}
+
+.steering {
+    flex-direction: row !important;
+}
+
+.ctrl-btn {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+}
+
+.ctrl-btn:active {
+    background: var(--primary);
+}
+
+/* Responsive Queries */
+@media (max-width: 768px) {
+    #hud {
+        bottom: auto;
+        top: 20px;
+        right: 20px;
+        align-items: flex-end;
+    }
+    
+    .speedometer {
+        padding: 10px 25px;
+    }
+    
+    #speed-value {
+        font-size: 2.5rem;
+    }
+    
+    .controls-hint {
+        display: none;
+    }
+    
+    #mobile-controls {
+        display: flex;
+    }
+
+    body.in-game {
+        cursor: auto;
+    }
+}
+
+/* Landscape optimization */
+@media (max-height: 500px) {
+    .ctrl-btn {
+        width: 50px;
+        height: 50px;
+    }
 }
