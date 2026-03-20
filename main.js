@@ -16,15 +16,15 @@ class Game {
         this.speedElement = document.getElementById('speed-value');
         this.distanceElement = document.getElementById('distance-value');
         this.crashOverlay = document.getElementById('crash-overlay');
-        
+
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
         this.clock = new THREE.Clock();
-        
+
         this.distance = 0;
         this.isCrashed = false;
-        
+
         this.init();
     }
 
@@ -57,7 +57,33 @@ class Game {
         document.body.classList.add('in-game');
 
         window.addEventListener('resize', () => this.onWindowResize());
-        this.animate();
+
+        // Start countdown then animate
+        this.startCountdown(() => this.animate());
+    }
+
+    startCountdown(callback) {
+        const overlay = document.getElementById('countdown-overlay');
+        const numEl   = document.getElementById('countdown-number');
+        let count = 3;
+
+        numEl.innerText = count;
+        overlay.style.display = 'flex';
+
+        const tick = setInterval(() => {
+            count--;
+            if (count > 0) {
+                numEl.innerText = count;
+            } else if (count === 0) {
+                numEl.innerText = 'GO!';
+                numEl.style.color = '#00ff88';
+                numEl.style.textShadow = '0 0 40px #00ff88, 0 0 80px #00ff88';
+            } else {
+                clearInterval(tick);
+                overlay.style.display = 'none';
+                callback();
+            }
+        }, 1000);
     }
 
     initPostProcessing() {
@@ -89,7 +115,7 @@ class Game {
         targetOffset.applyQuaternion(this.car.mesh.quaternion);
         const targetPos = this.car.mesh.position.clone().add(targetOffset);
         this.camera.position.lerp(targetPos, 0.05);
-        
+
         const lookTarget = this.car.mesh.position.clone().add(new THREE.Vector3(0, 1, 10).applyQuaternion(this.car.mesh.quaternion));
         this.camera.lookAt(lookTarget);
     }
@@ -122,17 +148,19 @@ class Game {
         if (this.isCrashed) return;
         this.isCrashed = true;
         this.car.speed = 0;
-        
+
         // Face opposite direction for dramatic effect
         this.car.mesh.rotation.y += Math.PI;
 
         this.crashOverlay.querySelector('h1').innerText = message;
         this.crashOverlay.style.display = 'flex';
-        
+
         setTimeout(() => {
             this.resetGame();
             this.isCrashed = false;
             this.crashOverlay.style.display = 'none';
+            // Show countdown again before resuming
+            this.startCountdown(() => { /* animate loop already running */ });
         }, 2000);
     }
 
@@ -143,7 +171,7 @@ class Game {
         this.car.mesh.position.set(0, 0, 0);
         this.car.mesh.rotation.set(0, 0, 0);
 
-        // Reset score
+        // Reset scorehurdles b/w
         this.distance = 0;
 
         // Reset environment (obstacles + tiles)
@@ -160,11 +188,11 @@ class Game {
     animate() {
         requestAnimationFrame(() => this.animate());
         const delta = this.clock.getDelta();
-        
+
         if (!this.isCrashed) {
             this.car.update(delta, this.controls);
             this.environment.update(this.car.mesh.position.z);
-            
+
             if (this.car.speed > 0) {
                 this.distance += this.car.speed * delta;
             }

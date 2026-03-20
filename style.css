@@ -100,6 +100,35 @@ body {
     font-size: 1.5rem;
 }
 
+/* Countdown Overlay */
+#countdown-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+}
+
+#countdown-number {
+    font-size: 12rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 0 40px var(--primary), 0 0 80px var(--primary);
+    animation: countdown-pulse 1s ease-in-out infinite;
+    line-height: 1;
+}
+
+@keyframes countdown-pulse {
+    0%   { transform: scale(1.2); opacity: 1; }
+    50%  { transform: scale(1.0); opacity: 0.8; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+
 #speed-value {
     font-size: 4rem;
     font-weight: 700;

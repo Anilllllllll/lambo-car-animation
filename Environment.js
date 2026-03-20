@@ -89,17 +89,25 @@ export class Environment {
     }
 
     spawnObstacles(z) {
-        // 40% chance of spawning an obstacle on a tile
-        if (Math.random() > 0.6) {
-            const obstacleGeo = new THREE.ConeGeometry(0.5, 1, 8);
-            const obstacleMat = new THREE.MeshStandardMaterial({ color: 0xffa500 }); // Orange Cones
+        // Always spawn 1-3 cones per tile
+        const count = Math.floor(Math.random() * 3) + 1;
+        const lanes = [-8, -4, 0, 4, 8]; // more lane options across 30-unit wide road
+
+        for (let c = 0; c < count; c++) {
+            const obstacleGeo = new THREE.ConeGeometry(0.7, 2.0, 8); // taller & wider
+            const obstacleMat = new THREE.MeshStandardMaterial({
+                color: 0xff6600,
+                emissive: 0xff4400,       // glows orange even without HDR
+                emissiveIntensity: 0.6,
+                roughness: 0.4,
+                metalness: 0.1
+            });
             const obstacle = new THREE.Mesh(obstacleGeo, obstacleMat);
-            
-            // Random lane (-6, 0, or 6)
-            const lanes = [-6, 0, 6];
+
             const lane = lanes[Math.floor(Math.random() * lanes.length)];
-            
-            obstacle.position.set(lane, 0.5, z + (Math.random() - 0.5) * 40);
+            // Spread cones across the tile length, but not in the first 20 units
+            const offsetZ = 20 + Math.random() * (this.roadTileSize - 30);
+            obstacle.position.set(lane, 1.0, z - this.roadTileSize / 2 + offsetZ);
             obstacle.castShadow = true;
             this.scene.add(obstacle);
             this.obstacles.push(obstacle);
