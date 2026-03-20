@@ -130,7 +130,13 @@ export class Environment {
     }
 
     reset() {
+        // Remove all obstacles
         this.obstacles.forEach(obj => this.scene.remove(obj));
         this.obstacles = [];
+
+        // Reset road tiles to their original positions
+        this.tiles.forEach((tile, i) => {
+            tile.position.z = i * this.roadTileSize;
+        });
     }
 }

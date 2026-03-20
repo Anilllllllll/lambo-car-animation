@@ -137,11 +137,23 @@ class Game {
     }
 
     resetGame() {
+        // Reset car state
         this.car.speed = 0;
+        this.car.steering = 0;
         this.car.mesh.position.set(0, 0, 0);
         this.car.mesh.rotation.set(0, 0, 0);
+
+        // Reset score
         this.distance = 0;
+
+        // Reset environment (obstacles + tiles)
         this.environment.reset();
+
+        // Snap camera behind car immediately (no lerp lag)
+        this.camera.position.set(0, 5, -12);
+        this.camera.lookAt(0, 1, 10);
+
+        // Update HUD to show 0
         this.updateHUD();
     }
 
