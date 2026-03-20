@@ -130,11 +130,19 @@ class Game {
         this.crashOverlay.style.display = 'flex';
         
         setTimeout(() => {
+            this.resetGame();
             this.isCrashed = false;
             this.crashOverlay.style.display = 'none';
-            // Move car forward slightly to avoid immediate re-collision
-            this.car.mesh.position.z += 10;
         }, 2000);
+    }
+
+    resetGame() {
+        this.car.speed = 0;
+        this.car.mesh.position.set(0, 0, 0);
+        this.car.mesh.rotation.set(0, 0, 0);
+        this.distance = 0;
+        this.environment.reset();
+        this.updateHUD();
     }
 
     animate() {

@@ -128,4 +128,9 @@ export class Environment {
             }
         });
     }
+
+    reset() {
+        this.obstacles.forEach(obj => this.scene.remove(obj));
+        this.obstacles = [];
+    }
 }
