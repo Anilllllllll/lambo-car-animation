@@ -142,9 +142,13 @@ export class Environment {
         this.obstacles.forEach(obj => this.scene.remove(obj));
         this.obstacles = [];
 
-        // Reset road tiles to their original positions
+        // Reset road tiles to their original positions and re-spawn obstacles
         this.tiles.forEach((tile, i) => {
             tile.position.z = i * this.roadTileSize;
+            // Re-spawn obstacles on tiles ahead of the start (same rule as initial creation)
+            if (tile.position.z > 100) {
+                this.spawnObstacles(tile.position.z);
+            }
         });
     }
 }
