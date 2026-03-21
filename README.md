@@ -1,8 +1,9 @@
-# 🏎️ Lambo 3D Experience | Industry Level
+<img width="1919" height="1101" alt="image" src="https://github.com/user-attachments/assets/ca8b29be-ae43-4760-86c5-2d6bf8e2b6fb" /># 🏎️ Lambo 3D Experience | Industry Level
 
 A high-fidelity, interactive 3D car simulation built with Three.js. Experience a premium Lamborghini-style driving experience directly in your browser.
 
-![Lambo 3D Preview](https://github.com/Anilllllllll/lambo-car-animation/raw/main/preview.png) *(Note: Add your own screenshot as preview.png)*
+<img width="1919" height="1101" alt="image" src="https://github.com/user-attachments/assets/f2dec36c-8d48-4bfe-8eea-441c116f13a2" />
+
 
 ## ✨ Features
 
