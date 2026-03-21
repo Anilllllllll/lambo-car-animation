@@ -2,7 +2,8 @@
 
 A high-fidelity, interactive 3D car simulation built with Three.js. Experience a premium Lamborghini-style driving experience directly in your browser.
 
-<img width="1919" height="1101" alt="image" src="https://github.com/user-attachments/assets/f2dec36c-8d48-4bfe-8eea-441c116f13a2" />
+<img width="1919" height="1094" alt="image" src="https://github.com/user-attachments/assets/2810e129-dff4-4e93-b7fb-fb870bd15bd4" />
+
 
 
 ## ✨ Features
