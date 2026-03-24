@@ -1,63 +1,144 @@
-<img width="1919" height="1101" alt="image" src="https://github.com/user-attachments/assets/ca8b29be-ae43-4760-86c5-2d6bf8e2b6fb" /># 🏎️ Lambo 3D Experience | Industry Level
+# 🏎️ Lambo 3D Experience | Industry Level
 
-A high-fidelity, interactive 3D car simulation built with Three.js. Experience a premium Lamborghini-style driving experience directly in your browser.
+A high-fidelity, interactive **3D car simulation** built with **Three.js**.
+This project delivers a premium Lamborghini-style driving experience directly in the browser using WebGL and modern JavaScript.
 
+---
+
+## 📸 Preview
+
+<img width="1919" height="1101" alt="image" src="https://github.com/user-attachments/assets/ca8b29be-ae43-4760-86c5-2d6bf8e2b6fb" />
 <img width="1919" height="1094" alt="image" src="https://github.com/user-attachments/assets/2810e129-dff4-4e93-b7fb-fb870bd15bd4" />
 
-
+---
 
 ## ✨ Features
 
-- **🚀 High-Performance 3D Engine**: Powered by Three.js with WebGL 2.0.
-- **💎 PBR Visuals**: Physically Based Rendering for realistic car paint and reflections.
-- **🎮 Interactive Controls**: Full WASD and Arrow key driving mechanics.
-- **🛣️ Procedural Environment**: An infinite road system with dynamic lighting and shadows.
-- **📊 Modern HUD**: Sleek glass-morphism speedometer and real-time dashboard.
-- **🎬 Follow Camera**: Smoothed 3rd-person cinematic camera system.
+* 🚀 High-performance 3D rendering using **Three.js & WebGL**
+* 💎 **Physically Based Rendering (PBR)** materials for realistic reflections
+* 🎮 **Interactive driving controls** (WASD / Arrow keys)
+* 🛣️ **Procedural infinite road** environment
+* 📊 Modern **glass-morphism speedometer HUD**
+* 🎬 Smooth **cinematic follow camera**
+* 🌗 Dynamic lighting and shadows
+* ⚡ Optimized 3D model loading using **Draco Compression**
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Three.js**: Core 3D engine.
-- **JavaScript (ES6+)**: Modular architecture.
-- **HTML5 & Vanilla CSS**: Premium UI styling with Google Fonts (Outfit).
-- **Draco Compression**: Optimized 3D model loading.
+| Technology               | Purpose               |
+| ------------------------ | --------------------- |
+| Three.js                 | 3D Rendering Engine   |
+| WebGL 2.0                | Graphics Rendering    |
+| JavaScript (ES6 Modules) | Application Logic     |
+| HTML5                    | Structure             |
+| CSS3                     | Styling & UI          |
+| Draco Compression        | 3D Model Optimization |
+
+---
+
+## 📂 Project Structure
+
+```id="ygx1yd"
+lambo-car-animation/
+│
+├── index.html
+├── style.css
+├── main.js
+├── assets/
+│   ├── models/
+│   ├── textures/
+│   └── environment/
+│
+├── shaders/
+└── README.md
+```
+
+---
 
 ## 🚀 How to Run
 
-Since the project uses ES Modules and handles 3D assets, it must be served through a local development server to avoid CORS issues.
+Since the project uses ES Modules and loads 3D assets, it must run on a local server.
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Anilllllllll/lambo-car-animation.git
-   cd lambo-car-animation
-   ```
+### 1. Clone Repository
 
-2. **Run a local server**:
-   You can use any local server of your choice:
-   - **Using VS Code**: Right-click `index.html` and select "Open with Live Server".
-   - **Using NPX**:
-     ```bash
-     npx serve .
-     ```
-   - **Using Python**:
-     ```bash
-     python -m http.server
-     ```
+```bash id="d8nduj"
+git clone https://github.com/Anilllllllll/lambo-car-animation.git
+cd lambo-car-animation
+```
 
-3. **Open in Browser**: Navigate to `http://localhost:3000` (or the port provided by your server).
+### 2. Run Local Server
+
+You can use any of the following:
+
+**VS Code Live Server**
+
+* Right-click `index.html`
+* Click **Open with Live Server**
+
+**Using NPX**
+
+```bash id="gy3g9m"
+npx serve .
+```
+
+**Using Python**
+
+```bash id="v9g9e7"
+python -m http.server
+```
+
+### 3. Open in Browser
+
+```id="mtdn8p"
+http://localhost:3000
+```
+
+---
 
 ## 🎮 Controls
 
-- **W / Arrow Up**: Accelerate
-- **S / Arrow Down**: Brake & Reverse
-- **A / D / Arrow Left/Right**: Steering
-- **Space**: Hard Brake
-
-## 📜 Credits
-
-- 3D Model: Sports Car (Ferrari 458 Italia) via Three.js Community.
-- Engine: Three.js.
-- Developed by: Antigravity AI.
+| Key              | Action          |
+| ---------------- | --------------- |
+| W / Arrow Up     | Accelerate      |
+| S / Arrow Down   | Brake / Reverse |
+| A / D            | Steering        |
+| Arrow Left/Right | Steering        |
+| Space            | Hard Brake      |
 
 ---
-*Inspired by the passion for speed and premium design.*
+
+## 🎯 Project Highlights
+
+* Real-time 3D rendering
+* Camera follow system
+* Game-like driving physics
+* HUD dashboard UI
+* Procedural environment generation
+* Modular JavaScript architecture
+
+---
+
+## 🔮 Future Improvements
+
+* Gear system
+* Engine sound effects
+* Different camera angles
+* Multiple cars
+* Day/Night mode
+* Mobile controls
+* Collision detection
+* Multiplayer mode
+
+---
+
+## 👨‍💻 Author
+
+**Anil Kumar**
+
+---
+
+## ⭐ Support
+
+If you like this project, please give it a **star ⭐ on GitHub**.
